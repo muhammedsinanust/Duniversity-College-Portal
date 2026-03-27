@@ -24,7 +24,7 @@ DESCRIBE timetables;
 SELECT * FROM timetables;
 
 -- 6. Optional: Insert sample data for testing (uncomment if needed)
-/*
+
 INSERT INTO timetables (branch, semester, timetable_json) VALUES 
 (
   'CS', 
@@ -50,6 +50,6 @@ INSERT INTO timetables (branch, semester, timetable_json) VALUES
     )
   )
 );
-*/
+
 
 SHOW TABLE STATUS WHERE Name = 'timetables';
