@@ -1,9 +1,9 @@
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: mysql-deployment
+  name: {{ .Values.mysql.name }}
 spec:
-  replicas: 1
+  replicas: {{ .Values.mysql.replicas }}
   updateStrategy:
     type: RollingUpdate
   minReadySeconds: 10
@@ -18,9 +18,10 @@ spec:
     spec:
       containers:
         - name: mysql
-          image: mysql:8.0
+          image: {{ .Values.mysql.image }}:{{ .Values.mysql.tag }}
+          imagePullPolicy: {{ .Values.mysql.imagePullPolicy }}
           ports:
-            - containerPort: 3306
+            - containerPort: {{ .Values.mysql.port }}
           env:
           - name: DB_HOST
             value: mariadb

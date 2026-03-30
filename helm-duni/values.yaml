@@ -10,3 +10,11 @@ image:
 
 port:
   container: 3000
+
+mysql:
+  name: mysql-deployment
+  replicas: 1
+  image: mysql
+  tag: 8.0
+  imagePullPolicy: IfNotPresent
+  port: 3306
