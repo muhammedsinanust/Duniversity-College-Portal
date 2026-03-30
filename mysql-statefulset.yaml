@@ -1,0 +1,65 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: mysql-deployment
+spec:
+  replicas: 1
+  updateStrategy:
+    type: RollingUpdate
+  minReadySeconds: 10
+  serviceName: mariadb
+  selector:
+    matchLabels:
+      app: mysql
+  template:
+    metadata:
+      labels:
+        app: mysql
+    spec:
+      containers:
+        - name: mysql
+          image: mysql:8.0
+          ports:
+            - containerPort: 3306
+          env:
+          - name: DB_HOST
+            value: mariadb
+          - name: DB_PORT
+            value: "3306"
+          envFrom:
+            - configMapRef:
+                name: mariadb-config
+            - secretRef:
+                name: mariadb-secret
+          resources:
+            requests:
+              memory: "512Mi"
+              cpu: "100m"
+            limits:
+              memory: "1Gi"
+              cpu: "500m"
+          volumeMounts:
+            - name: mysql-vct
+              mountPath: /var/lib/mysql
+      terminationGracePeriodSeconds: 10
+  volumeClaimTemplates:
+  - metadata:
+      name: mysql-vct
+    spec:
+      accessModes: ["ReadWriteMany"]
+      storageClassName: nfs-csi
+      resources:
+        requests:
+          storage: 1Gi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mariadb
+spec:
+  selector:
+    app: mysql
+  ports:
+    - port: 3306
+      targetPort: 3306
+  clusterIP: None

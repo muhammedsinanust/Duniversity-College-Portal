@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: volume-replication-operator
+  namespace: replication-system
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: volume-replication-operator
+  template:
+    metadata:
+      labels:
+        app: volume-replication-operator
+    spec:
+      serviceAccountName: volume-replication-operator
+      containers:
+      - name: volume-replication-operator
+        image: quay.io/csiaddons/volume-replication-operator:latest
+        imagePullPolicy: Always

@@ -1,0 +1,6 @@
+apiVersion: v2
+name: duni
+description: dunivercity college portal
+type: applications
+version: 1.1.0 #chart version
+appVersion:1.1.0 #app version

@@ -1,0 +1,11 @@
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: nfs-csi
+provisioner: nfs.csi.k8s.io
+parameters:
+  server: 172.31.1.190   # your NFS server IP
+  share: /var/nfs       # your exported path
+reclaimPolicy: Delete
+volumeBindingMode: Immediate
+allowVolumeExpansion: true
