@@ -1,9 +1,9 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: duni-deployment
+  name: {{ .Values.app.name }}
 spec:
-  replicas: 2
+  replicas: {{ .Values.replicaCount }}
   strategy:
     type: RollingUpdate
     rollingUpdate:
@@ -19,10 +19,10 @@ spec:
     spec:
       containers:
         - name: duni-container
-          image: muhammedsinanust/duniversity:latest
-          imagePullPolicy: Always
+          image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
-            - containerPort: 3000
+            - containerPort: {{ .Values.port.container }}
           env:
           - name: DB_HOST
             value: mariadb

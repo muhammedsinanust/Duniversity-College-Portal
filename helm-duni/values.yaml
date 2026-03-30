@@ -1,0 +1,12 @@
+app:
+  name: duni-deployment
+
+replicaCount: 2
+
+image:
+  repository: muhammedsinanust/duniversity
+  tag: latest
+  pullPolicy: Always
+
+port:
+  container: 3000
